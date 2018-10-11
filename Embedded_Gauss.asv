@@ -1,8 +1,8 @@
 % parameters
-eqname = 'van_der_Pol'; % the filename of right hand size function
+eqname = 'van_der_Pol.m'; % the filename of right hand size function
 y_initial = [2; 0];
 Tend = 12;
-h_initial = 1.0;
+h_initial = 0.001;
 s = 3;
 
 % Getting Runge-Kutta formula
@@ -20,5 +20,5 @@ Y = y;
 
 k = zeros(s,1);
 
-% main part
-yplus = EGauss_iteration(y,h,A,b,c,Ahat,bhat,eqname) %#ok<NOPTS>
+while t < Tend
+    Updating_formula = @(k) k- arrayfun(eqname,t

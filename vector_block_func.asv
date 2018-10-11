@@ -1,0 +1,4 @@
+function y = vector_block_func(funcname,inputsize,vector)
+% Apply the elements of the vector to the f 
+end
+

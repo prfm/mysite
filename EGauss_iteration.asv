@@ -1,0 +1,14 @@
+function yplus = EGauss_iteration(y,h,A,b,c,Ahat,bhat,eqname)
+    
+    n = size(y,1); % order of the equation
+    s = size(A,1); % number of steps
+    
+    options = optimoptions('fsolve','Display','off');
+    
+    K = ones(n,s);
+    Updating_formula_1 = @(K) K- vdP_table(K);
+    K = Updating_formula_1,ones(n,s))
+    
+    yplus = y + h*K*b;
+    
+end

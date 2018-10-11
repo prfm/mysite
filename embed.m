@@ -1,5 +1,7 @@
 function [Ahat,bhat] = embed(A,c)
-% Returns the matrix A and vecter b of the embedded formula of Gauss formula.
+% Returns the matrix A and vector b of the embedded formula of Gauss formula.
+% Inputs are matrix A and vector c of the original Runge-Kutta formula.
+
     K = fliplr(vander(c))';
     right = c;
     
