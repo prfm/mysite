@@ -1,14 +1,20 @@
-function y = vector_block_func(funcname,inputsize,vector)
-% Apply the elements of the vector to the function whose inputsize is
-% smaller than that of the vector. First, input 1,2,...,inputsize -th
-% elements and then inputsize+1,...,2*inputsize -th elements and so on,
+function y = vector_block_func(inputsize,vector)
+% vertcat the input vector and outputvector of vdP eq.
 
-if rem(size(vector,1),inputsize) ~= 0
+n=size(vector,1);
+
+if rem(n,inputsize) ~= 0
     disp('Wrong input to vector_block_func.');
     quit
 end
 
+y=0;
+k=0;
 
+while k*inputsize < n
+    y = vertcat(y,van_der_Pol(); %#ok<AGROW>
+    k = k+1;
+end
 
 end
 

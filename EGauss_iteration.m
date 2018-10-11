@@ -1,13 +1,15 @@
-function yplus = EGauss_iteration(y,h,A,b,c,Ahat,bhat,eqname)
+function yplus = EGauss_iteration(y,h,A,b,bhat)
     
     n = size(y,1); % order of the equation
     s = size(A,1); % number of steps
     
-    options = optimoptions('fsolve','Display','off');
+    UDF = @(X) X-vdP_vec(y,h,A,X);
     
-    UDF = @(X) reshape(X,[],1)-array_to_rowfunc(eqname,X);
+    K = fsolve(UDF,zeros(n*s,1));
+    
+    K = reshape(K,n,s);
     
     
-    yplus = y + h*K*b;
     
+    yplus=y+h*K*b;
 end
