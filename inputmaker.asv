@@ -1,6 +1,0 @@
-function z = inputmaker(y,A,klong,index)
-% Return t
-outputArg1 = inputArg1;
-outputArg2 = inputArg2;
-end
-
