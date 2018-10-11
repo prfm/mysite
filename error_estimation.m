@@ -1,8 +1,8 @@
 function r = error_estimation(y_highorder,y_loworder,y)
 % Define error estimation here
 % Koya Tomonori's way    
-    ATOL=0.1;
-    RTOL=0;
+    ATOL=0;
+    RTOL=10^(-8);
     
     
     n = size(y_highorder,1);
@@ -11,7 +11,8 @@ function r = error_estimation(y_highorder,y_loworder,y)
     r=0;
     
     for i = 1:n
-        r = r + (err(i)/(ATOL+RTOL*max(abs(y_highorder(i)),abs(y(i)))))^2;
+        tol = ATOL + RTOL * max(abs(y_highorder(i)),abs(y(i)));
+        r = r + (err(i)/tol)^2;
     end
     
     r = r/n;

@@ -1,4 +1,4 @@
-function [yplus,error] = EGauss_iteration(y,h,A,b,bhat)
+function [yplus,error,hnext] = EGauss_iteration(y,h,A,b,bhat)
     
     n = size(y,1); % order of the equation
     s = size(A,1); % number of steps
@@ -11,7 +11,10 @@ function [yplus,error] = EGauss_iteration(y,h,A,b,bhat)
     K = reshape(K,n,s);
     
     yplus = y + h*K*b;
-    yplus_loworder = (1+bhat(1))*y + h * K * bhat(2:s+1);
+    yplus_loworder = y + h *(van_der_Pol(y) * bhat(1)+ K * bhat(2:s+1));
     
-    error = error_estimation(yplus,yplus_loworder,y);
+    error = error_estimation(yplus,yplus_loworder,y);    
+    
+    hnext= 0.9*(1/error)^(1/(s+1))*h;
+    
 end

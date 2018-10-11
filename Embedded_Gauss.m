@@ -1,7 +1,7 @@
 % parameters
 eqname = 'van_der_Pol'; % the filename of right hand size function
-y_initial = [2; 0];
-Tend = 12;
+y_initial = [0.5; 0];
+Tend = 20;
 h_initial = 0.001;
 s = 3;
 
@@ -22,31 +22,40 @@ E = 0;
 flag = 0;
 % main part
 while t < Tend
-    [yplus,err] = EGauss_iteration(y,h,A,b,bhat);
+    
+    [yplus,err,hnext] = EGauss_iteration(y,h,A,b,bhat);
+    
+    E = horzcat(E,err);
+    while err > 1
+        E = horzcat(E,err);
+        [yplus,err,hnext] = EGauss_iteration(y,hnext,A,b,bhat);
+    end
+    
+    if hnext == inf
+        disp('  infinity stepsize');
+        break;
+    end
+    
+    h = hnext;
+    H = horzcat(H,h);
+    
     flag = flag +1;
     t = t+h;
     if flag ==1000
         disp(t);
         flag = 0;
     end
+    
     T = horzcat(T,t);
     Y = horzcat(Y,yplus);
+    
     y = yplus;
     
-    
-    h= 0.9*(1/err)^(1/(s+1))*h;
-    
-    H = horzcat(H,h);
-    
-    if h < 10^(-10)
-        disp('  Too short stepsize')
-        break;
-    end
-    
-    E = horzcat(E,err);
     
 end
 
 pos = Y(2,:);
 vel = Y(1,:);
 plot(pos,vel);
+xlim([-4,4]);
+ylim([-4,4]);
