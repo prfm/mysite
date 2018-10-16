@@ -54,8 +54,8 @@ while t < Tend
     
 end
 
-pos = Y(2,:);
-vel = Y(1,:);
+pos = Y(1,:);
+vel = Y(2,:);
 plot(pos,vel);
 xlim([-4,4]);
 ylim([-4,4]);
