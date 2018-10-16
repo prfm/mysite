@@ -5,7 +5,7 @@ Tend = 12;
 h_initial = 10^(-3);
 s = 3;
 n = 2;
-tol = 0.0001;
+tol = 10^(-10);
  %#ok<*AGROW>
 
 % Getting Runge-Kutta formula

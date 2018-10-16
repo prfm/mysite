@@ -15,7 +15,7 @@ function [yplus,error,Kprev] = EGauss_iteration(y,h,A,b,bhat,Kprev)
     yplus = y + h*K*b;
     yplus_loworder = y + h *(van_der_Pol(y) * bhat(1)+ K * bhat(2:s+1));
     
-    error = error_estimation(yplus,yplus_loworder,2);    
+    error = error_estimation(yplus,yplus_loworder,1);    
     
     
 end
