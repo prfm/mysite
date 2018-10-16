@@ -21,7 +21,9 @@ y = y_initial;
 Y = y;
 h = h_initial;
 H = h;
+Hacc = 0;
 E = 0;
+Eacc = 0;
 loop = 0;
 RH = zeros(2,2);
 FLAG = [1.0;0;0];
@@ -60,6 +62,8 @@ while t < Tend
         H = horzcat(H,h);
     end
     
+    Eacc = horzcat(Eacc,error);
+    Hacc = horzcat(Hacc,h);
     t = t+h;
     
     loop = loop +1;
@@ -75,5 +79,5 @@ while t < Tend
     
 end
 
-Data=struct('Time',T,'Pos',pos,'Vel',vel,'Stepsize',H,'Error',E);
+Data=struct('Time',T,'Pos',pos,'Vel',vel,'Stepsize',H,'Stepsize_accepted',Hacc,'Error',E,'Error_accepted',Eacc);
 
