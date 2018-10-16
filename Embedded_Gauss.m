@@ -27,8 +27,8 @@ while t < Tend
     
     E = horzcat(E,err);
     while err > 1
-        E = horzcat(E,err);
         [yplus,err,hnext] = EGauss_iteration(y,hnext,A,b,bhat);
+        E = horzcat(E,err);
     end
     
     if hnext == inf
@@ -54,8 +54,10 @@ while t < Tend
     
 end
 
+%{
 pos = Y(1,:);
 vel = Y(2,:);
 plot(pos,vel);
 xlim([-4,4]);
 ylim([-4,4]);
+%}
