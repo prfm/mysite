@@ -28,11 +28,11 @@ function [hnext,RH,FLAG] = predictive_controller(s,h,error,RH,FLAG,tol)
         RH(2,2) = h;
         
         FLAG(1) = 0;
-        FLAG(2) = FLAG(2) + 0.25;
+        FLAG(2) = 1;
         FLAG(3) = 0;
     end
     
-    [hnext,FLAG] = restrict(hnext,FLAG);
+    [hnext,FLAG] = restrict(hnext,h,FLAG);
             
 end
 

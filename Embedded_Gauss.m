@@ -5,7 +5,7 @@ Tend = 12;
 h_initial = 10^(-3);
 s = 3;
 n = 2;
-tol = 0.01;
+tol = 0.0001;
  %#ok<*AGROW>
 
 % Getting Runge-Kutta formula
@@ -29,7 +29,7 @@ K = zeros(n*s,1);
 
 % choose the stepsize controller
 % 1 for the traditional one and 2 for the predictive one
-controller = 1.0;
+controller = 2.0;
 
 % main part
 while t < Tend
@@ -49,6 +49,7 @@ while t < Tend
     while error > tol
         [yplus,error,K] = EGauss_iteration(y,h,A,b,bhat,K);
         
+        E = horzcat(E,error);
         if controller == 1
             hnext = 0.9 * (tol/error)^(1/(s+1))*h;
         else
@@ -75,11 +76,9 @@ while t < Tend
     
 end
 
-%{
 pos = Y(1,:);
 vel = Y(2,:);
 stem(pos,vel,'LineStyle','none');
-%}
 
 figure
 stem(T,pos,'LineStyle','none')
