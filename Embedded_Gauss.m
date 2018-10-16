@@ -4,6 +4,7 @@ y_initial = [2.0; 0];
 Tend = 12;
 h_initial = 0.001;
 s = 3;
+tol = 10^(-4);
 
 %#ok<*AGROW>
 % Getting Runge-Kutta formula
@@ -26,13 +27,13 @@ flag = 0;
 % main part
 while t < Tend
     
-    [yplus,err,hnext] = EGauss_iteration(y,h,A,b,bhat);
+    [yplus,err,hnext] = EGauss_iteration(y,h,A,b,bhat,tol);
     H = horzcat(H,hnext);
     E = horzcat(E,err);
     
-    while err > 1
+    while err > tol
         h = hnext;
-        [yplus,err,hnext] = EGauss_iteration(y,h,A,b,bhat);
+        [yplus,err,hnext] = EGauss_iteration(y,h,A,b,bhat,tol);
         E = horzcat(E,err);
         H = horzcat(H,hnext);
     end
