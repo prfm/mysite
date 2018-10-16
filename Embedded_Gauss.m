@@ -29,7 +29,7 @@ K = zeros(n*s,1);
 
 % choose the stepsize controller
 % 1 for the traditional one and 2 for the predictive one
-controller = 2.0;
+controller = 1.0;
 
 % main part
 while t < Tend
