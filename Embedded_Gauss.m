@@ -56,4 +56,4 @@ end
 
 pos = Y(1,:);
 vel = Y(2,:);
-plot(pos,vel);
+plot(T,pos);
