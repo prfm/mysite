@@ -57,5 +57,3 @@ end
 pos = Y(1,:);
 vel = Y(2,:);
 plot(pos,vel);
-xlim([-4,4]);
-ylim([-4,4]);
