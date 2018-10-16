@@ -1,6 +1,6 @@
 % parameters
 eqname = 'van_der_Pol'; % the filename of right hand size function
-y_initial = [0.5; 0];
+y_initial = [2.0; 0];
 Tend = 20;
 h_initial = 0.001;
 s = 3;
