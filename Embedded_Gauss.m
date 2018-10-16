@@ -45,32 +45,26 @@ while t < Tend
         [hnext,RH,FLAG] = predictive_controller(s,h,error,RH,FLAG,tol);
     end
     
-    h = hnext;
-    H = horzcat(H,h);
+    H = horzcat(H,hnext);
     
     while error > tol
+        h = hnext;
         [yplus,error,K] = EGauss_iteration(y,h,A,b,bhat,K);
-        
         E = horzcat(E,error);
+        
         if controller == 1
             hnext = 0.9 * (tol/error)^(1/(s+1))*h;
         else
             [hnext,RH,FLAG] = predictive_controller(s,h,error,RH,FLAG,tol);
         end
-        
-        h = hnext;
-        H = horzcat(H,h);
+        H = horzcat(H,hnext);
     end
     
     Eacc = horzcat(Eacc,error);
     Hacc = horzcat(Hacc,h);
-    t = t+h;
+    h = hnext;
     
-    loop = loop +1;
-    if loop ==1000
-        disp(t);
-        loop = 0;
-    end
+    t = t+h;
     
     T = horzcat(T,t);
     Y = horzcat(Y,yplus);
@@ -78,6 +72,9 @@ while t < Tend
     y = yplus;
     
 end
+
+pos = Y(1,:);
+vel = Y(2,:);
 
 Data=struct('Time',T,'Pos',pos,'Vel',vel,'Stepsize',H,'Stepsize_accepted',Hacc,'Error',E,'Error_accepted',Eacc);
 
