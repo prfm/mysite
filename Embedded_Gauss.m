@@ -35,7 +35,7 @@ controller = 1.0;
 while t < Tend
     
     [yplus,error,K] = EGauss_iteration(y,h,A,b,bhat,K);
-    E = horzcat(E,error);
+    
     
     if controller == 1
         hnext = 0.9 * (tol/error)^(1/(s+1))*h;
@@ -56,10 +56,11 @@ while t < Tend
         end
         
         h = hnext;
-        H = horzcat(H,h);    
+        H = horzcat(H,h);
     end
     
     t = t+h;
+    E = horzcat(E,error);
     
     loop = loop +1;
     if loop ==1000
@@ -74,10 +75,11 @@ while t < Tend
     
 end
 
+%{
 pos = Y(1,:);
 vel = Y(2,:);
 stem(pos,vel,'LineStyle','none');
-
+%}
 
 figure
 stem(T,pos,'LineStyle','none')
