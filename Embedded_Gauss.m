@@ -5,6 +5,7 @@ Tend = 12;
 h_initial = 0.001;
 s = 3;
 
+%#ok<*AGROW>
 % Getting Runge-Kutta formula
 % hat means embedded one
 [A,b,c] = Gauss();
@@ -17,34 +18,30 @@ y = y_initial;
 Y = y;
 h = h_initial;
 H = h;
+Hacc = 0;
 E = 0;
+Eacc = 0;
 
 flag = 0;
 % main part
 while t < Tend
     
     [yplus,err,hnext] = EGauss_iteration(y,h,A,b,bhat);
-    
+    H = horzcat(H,hnext);
     E = horzcat(E,err);
+    
     while err > 1
         [yplus,err,hnext] = EGauss_iteration(y,hnext,A,b,bhat);
         E = horzcat(E,err);
+        H = horzcat(H,hnext);
     end
     
-    if hnext == inf
-        disp('  infinity stepsize');
-        break;
-    end
-    
+    Hacc = horzcat(Hacc,h);
     h = hnext;
-    H = horzcat(H,h);
     
-    flag = flag +1;
+    Eacc = horzcat(Eacc,err);
+   
     t = t+h;
-    if flag ==1000
-        disp(t);
-        flag = 0;
-    end
     
     T = horzcat(T,t);
     Y = horzcat(Y,yplus);
@@ -54,10 +51,9 @@ while t < Tend
     
 end
 
-%{
+Hacc = horzcat(Hacc,h);
+
 pos = Y(1,:);
 vel = Y(2,:);
-plot(pos,vel);
-xlim([-4,4]);
-ylim([-4,4]);
-%}
+
+Data=struct('Time',T,'Pos',pos,'Vel',vel,'Stepsize',H,'Stepsize_accepted',Hacc,'Error',E,'Error_accepted',Eacc);
