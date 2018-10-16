@@ -31,7 +31,8 @@ while t < Tend
     E = horzcat(E,err);
     
     while err > 1
-        [yplus,err,hnext] = EGauss_iteration(y,hnext,A,b,bhat);
+        h = hnext;
+        [yplus,err,hnext] = EGauss_iteration(y,h,A,b,bhat);
         E = horzcat(E,err);
         H = horzcat(H,hnext);
     end
