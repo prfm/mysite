@@ -5,16 +5,17 @@ Tend = 10;
 h_initial = 10^(-3);
 s = 3;
 n = 2;
-tol = 10^(-10);
+tol = 10^(-30);
+mu = 1.2;
 
 % norm difinition
 % way = 1 means Gustafsson's norm
 % way = 2 means Euclidean norm
-way = 1;
+way = 2;
 
 % choose the stepsize controller
 % 1 for the traditional one and 2 for the predictive one
-controller = 1.0;
+controller = 1;
 
 %#ok<*AGROW>
 
@@ -53,7 +54,7 @@ while t < Tend
     
     H = horzcat(H,hnext);
     
-    while error > tol
+    while error > mu*tol
         State = horzcat(State,0);
         h = hnext;
         [yplus,error,K] = EGauss_iteration(y,h,A,b,bhat,K,way);
@@ -85,4 +86,4 @@ State = horzcat(State,1);
 pos = Y(1,:);
 vel = Y(2,:);
 
-Data=struct('Time',T,'Pos',pos,'Vel',vel,'Stepsize',H,'Stepsize_accepted',Hacc,'Error',E,'Error_accepted',Eacc);
+Data=struct('Time',T,'Pos',pos,'Vel',vel,'Stepsize',H,'Stepsize_accepted',Hacc,'Error',E,'Error_accepted',Eacc,'State',State);
