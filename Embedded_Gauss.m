@@ -1,22 +1,4 @@
-% parameters
-%eqname = 'van_der_Pol'; % the filename of right hand size function
-y_initial = [2.0; 0];
-Tend = 10;
-h_initial = 10^(-3);
-s = 3;
-n = 2;
-tol = 10^(-30);
-mu = 1.2;
-
-% norm difinition
-% way = 1 means Gustafsson's norm
-% way = 2 means Euclidean norm
-way = 2;
-
-% choose the stepsize controller
-% 1 for the traditional one and 2 for the predictive one
-controller = 1;
-
+% Set parameters in Star_calcuration.m
 %#ok<*AGROW>
 
 % Getting Runge-Kutta formula
@@ -48,6 +30,11 @@ while t < Tend
     
     if controller == 1
         hnext = (tol/error)^(1/(s+1))*h;
+        if hnext == 0 || hnext == inf
+            disp(' INAPPROPRIATE STEPSIZE')
+            disp(hnext)
+            break
+        end
     else
         [hnext,RH,FLAG] = predictive_controller(s,h,error,RH,FLAG,tol);
     end
@@ -66,6 +53,9 @@ while t < Tend
             [hnext,RH,FLAG] = predictive_controller(s,h,error,RH,FLAG,tol);
         end
         H = horzcat(H,hnext);
+        if hnext == 0 || hnext == inf
+            break
+        end
     end
     
     State = horzcat(State,1);
@@ -79,7 +69,11 @@ while t < Tend
     Y = horzcat(Y,yplus);
     
     y = yplus;
-    
+    if hnext == 0 || hnext == inf
+        disp(' INAPPROPRIATE STEPSIZE')
+        disp(hnext)
+        break
+    end
 end
 
 State = horzcat(State,1);
