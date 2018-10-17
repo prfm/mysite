@@ -4,6 +4,9 @@ function [hnext,outFLAG] = restrict(hnext,h,FLAG)
     if hnext > 2*h
         hnext = 2*h;
         outFLAG(3) = 1.0;
+        disp('RESTRICTION')
+        disp(hnext)
+        disp(h)
     end
 end
 

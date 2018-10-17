@@ -7,7 +7,7 @@ function r = error_estimation(y_highorder,y_loworder,way)
         n = size(y_highorder,1);
 
         % scaling factors
-        scal = 10^(-4) * ones(n,1);
+        scal = 10^(-2) * ones(n,1);
 
         err = abs(y_highorder - y_loworder);
 

@@ -32,7 +32,7 @@ function [hnext,RH,FLAG] = predictive_controller(s,h,error,RH,FLAG,tol)
         FLAG(3) = 0;
     end
     
-    [hnext,FLAG] = restrict(hnext,h,FLAG);
+    %[hnext,FLAG] = restrict(hnext,h,FLAG);
             
 end
 
